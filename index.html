@@ -252,7 +252,7 @@ canvas{width:100% !important;max-height:150px}
 
 <script>// Suppress unhandled promise rejections from showing as banner errors
 window.addEventListener('unhandledrejection',function(e){e.preventDefault();console.log('Handled rejection:',e.reason);});
-
+window.onerror=function(msg,src,line,col,err){console.log('Caught:',msg);return true;};
 
 var lastRecs={};
 var _lt=0;
@@ -356,7 +356,8 @@ async function runPostAnalysis(dayName,doneSets,vol,newPRs){
   }).filter(Boolean).join(' | ');
   var msg='Jonathan just completed '+dayName+'. Data: '+detail+'. Sets: '+doneSets+', Volume: '+vol+S.unit+', PRs: '+newPRs+'. Give 3-4 sentence post-workout analysis: 1 thing done well (cite numbers), 1 to improve next session (cite exercise+target), 1 motivational closer. Coach voice, no bullet points.';
   try{
-    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'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','anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:250,messages:[{role:'user',content:msg}]})});
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'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
+','anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:250,messages:[{role:'user',content:msg}]})});
     var data=await res.json();
     ct.textContent=(data.content&&data.content[0]&&data.content[0].text)||'';
   }catch(e){ct.textContent='Could not load analysis.';}
