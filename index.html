@@ -309,7 +309,7 @@ async function runPreBrief(){
   var exList=day.exercises.map(function(e){return e.name;}).join(', ');
   var msg='You are an elite personal trainer coaching Jonathan: male, 33, 6ft1, 189lbs, ~25% body fat, trains 4-5x/week CBum-inspired split. Unit: '+S.unit+'. Today: '+day.name+'. Exercises: '+exList+'. PRs: '+buildPRs()+'. History: '+buildHist()+'. Give a sharp pre-workout brief. For each exercise: exact weight x reps today plus one cue. If plateaued suggest a change. If first session give appropriate beginner weights. Format: bold opener, then each exercise on its line: **Name** - weight x reps - cue. End with **FOCUS TODAY:** one sentence. Direct coach voice.';
   try{
-    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'YOUR-NEW-KEY','anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:msg}]})});
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'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','anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:msg}]})});
     var data=await res.json();
     var text=(data.content&&data.content[0]&&data.content[0].text)||'Could not get response. Try again.';
     parseRecs(text,day);
@@ -356,7 +356,8 @@ async function runPostAnalysis(dayName,doneSets,vol,newPRs){
   }).filter(Boolean).join(' | ');
   var msg='Jonathan just completed '+dayName+'. Data: '+detail+'. Sets: '+doneSets+', Volume: '+vol+S.unit+', PRs: '+newPRs+'. Give 3-4 sentence post-workout analysis: 1 thing done well (cite numbers), 1 to improve next session (cite exercise+target), 1 motivational closer. Coach voice, no bullet points.';
   try{
-    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'YOUR-NEW-KEY','anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:250,messages:[{role:'user',content:msg}]})});
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'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
+','anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:250,messages:[{role:'user',content:msg}]})});
     var data=await res.json();
     ct.textContent=(data.content&&data.content[0]&&data.content[0].text)||'';
   }catch(e){ct.textContent='Could not load analysis.';}
